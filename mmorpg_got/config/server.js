@@ -8,7 +8,7 @@ var expressValidator = require('express-validator');
 
 var app = express();
 
-app.set('view eingine', 'ejs');
+app.set('view engine', 'ejs');
 app.set('views', './app/views');
 
 app.use(express.static('./app/public'));
@@ -19,7 +19,8 @@ app.use(expressValidator());
 
 consign()
     .include('app/routes')
-    .then('app/Models')
+    .then('config/dbConnection.js')
+    .then('app/models')
     .then('app/controllers')
     .into(app);
 
