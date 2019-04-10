@@ -55,6 +55,7 @@ JogoDAO.prototype.acao = function(acao)
         break;
     }
 
+    
     acao.acao_termina_em = date.getTime() + tempo;
 
     var dados = {
