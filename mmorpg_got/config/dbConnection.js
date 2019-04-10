@@ -15,16 +15,11 @@ var connMongoDB = function(dados)
         query(dbo, dados);
 
         db.close();
-        //var server = new mongo.Server('localhost', 27017, {});
-
-        //var db = new mongo.Db('got', server,  {});
-
-        //return db;
     });
 }
 function query(db, dados)
 {
-    console.log(dados);
+    var user = dados.usuario;
 
     var collection = db.collection(dados.collection);
 
@@ -34,11 +29,24 @@ function query(db, dados)
             collection.insertOne(dados.usuario, dados.callback);
             console.log("Inserção -> OK!!!!")
         break;
+
+        case "inserirParametros":
+            collection.insertOne(dados.parametros, dados.callback);
+        break;
+
+        case "iniciaJogo":
+            collection.find({usuario: dados.usuario}).toArray(dados.callback);
+        break;
+
+        case "autenticar":
+            collection.find({ 
+                usuario: {$eq: user.usuario}, 
+                senha: {$eq: user.senha}
+            }).toArray(dados.callback);
+        break;
     }
-
-
-
 }
+
 module.exports = function(){
     return connMongoDB;
 

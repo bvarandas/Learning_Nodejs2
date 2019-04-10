@@ -26,6 +26,20 @@ module.exports.cadastrar = function(application, req,res)
     
     ususariosDAO.inserirUsuario(dadosForm);
 
+    //geração dos parametros
+    var jogoDAO = new application.app.models.JogoDAO(connection);
+
+    jogoDAO.gerarParametros({
+        usuario: dadosForm.usuario,
+        moeda: 15,
+        suditos:10,
+        temor: Math.floor(Math.random() * 1000),
+        sabedoria: Math.floor(Math.random() * 1000),
+        comercio:Math.floor(Math.random() * 1000),
+        magia:Math.floor(Math.random() * 1000)
+    });
+
     res.send('podemos cadastrar');
+    //res.render('jogo',{img_casa: req.session.casa});
 
 }
