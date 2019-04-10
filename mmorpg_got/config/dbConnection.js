@@ -37,7 +37,9 @@ function query(db, dados)
         case "iniciaJogo":
             collection.find({usuario: dados.usuario}).toArray(dados.callback);
         break;
-
+        case "acaoJogo":
+            collection.insertOne(dados.acao, dados.callback);
+        break;
         case "autenticar":
             collection.find({ 
                 usuario: {$eq: user.usuario}, 

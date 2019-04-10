@@ -53,7 +53,14 @@ module.exports.ordenar_acao_sudito = function(application, req, res){
         return;
     }
 
-    res.send('tudo ok!!')
-//    res.render('ordenar_acao_sudito', {validacao:{}});
+    var connection = application.config.dbConnection;
+    
+    var JogoDAO = new application.app.models.JogoDAO(connection);
+    
+    dadosForm.usuario = req.session.usuario;
+    
+    JogoDAO.acao(dadosForm);
+
+    res.send('tudo ok!!!');
 }
 
