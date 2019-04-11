@@ -98,6 +98,23 @@ JogoDAO.prototype.getAcoes = function(req, res, usuario, msg){
     this._connection(dados);
 };
 
+JogoDAO.prototype.revogarAcao = function(_id, usuario, res){
+    var dados = {
+        operacao: "revogaAcao",
+        _id: _id,
+        usuario: usuario,
+        collection: "acao",
+    };
+
+    dados.callback = function(err, result)
+    {
+        res.redirect('/jogo?msg=D')
+        //res.render('pergaminhos', { acoes: result, msg: msg});
+    };
+
+    this._connection(dados);
+}
+
 module.exports = function(){
     return JogoDAO;
 }

@@ -1,3 +1,6 @@
+/* importar o modulo do crypto*/
+var crypto = require('crypto');
+
 function UsuariosDAO(connection){
     this._connection = connection;
 }
@@ -9,6 +12,10 @@ UsuariosDAO.prototype.inserirUsuario = function(usuario){
         usuario: usuario,
         collection: "usuarios"
     };
+
+    var senha_criptografada = crypto.createHash('md5').update(usuario.senha).digest("hex");
+
+    usuario.senha = senha_criptografada;
 
     this._connection(dados);
 };
@@ -22,6 +29,10 @@ UsuariosDAO.prototype.autenticar = function(req, res, dadosForm){
         
     };
 
+    var senha_criptografada = crypto.createHash('md5').update(dadosForm.senha).digest("hex");
+
+    dadosForm.senha = senha_criptografada;
+    
     dados.callback = function (err, result)
     {
         if (result[0]!= undefined){
@@ -36,7 +47,7 @@ UsuariosDAO.prototype.autenticar = function(req, res, dadosForm){
             res.redirect('jogo');
 
         }else{
-            res.render('index', {validacao:{}});
+            res.render('index', {validacao:{}, msg:'A'});
         }
     };
 

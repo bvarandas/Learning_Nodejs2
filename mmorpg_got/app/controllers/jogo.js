@@ -19,7 +19,7 @@ module.exports.jogo = function(application, req, res){
 
 module.exports.sair = function(application, req, res){
     req.session.destroy(function(err){
-        res.render('index', {validacao:{}});
+        res.render('index', {validacao:{}, msg:{}});
     });
 }
 
@@ -71,3 +71,15 @@ module.exports.ordenar_acao_sudito = function(application, req, res){
     res.redirect('jogo?msg=B');
 }
 
+module.exports.revogar_acao = function(application, req, res){
+    var url_query = req.query;
+    
+    var connection = application.config.dbConnection;
+    
+    var JogoDAO = new application.app.models.JogoDAO(connection);
+
+    var _id = url_query.id_acao;
+
+    JogoDAO.revogarAcao(_id, req.session.usuario, res);
+    //res.send(url_query);
+}

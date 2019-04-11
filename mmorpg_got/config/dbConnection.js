@@ -1,3 +1,5 @@
+var ObjectID = require('mongodb').ObjectId;
+
 /*importar o mongodb*/
 var mongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
@@ -7,8 +9,6 @@ var url = "mongodb://localhost:27017/";
 var connMongoDB = function(dados)
 {
     mongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
-        //assert.equal(null, err);
-        console.log('Connected sucesfuly to server');
         
         const dbo = db.db(dbName);
 
@@ -41,8 +41,8 @@ function query(db, dados)
             collection.insertOne(dados.acao, dados.callback);
 
             collection.update(
-                {usuario:acao.usuario},
-                {$inc:{moeda: moedas}}
+                {usuario: dados.acao.usuario},
+                {$inc:{moeda: dados.acao.moedas}}
             );
         break;
         case "autenticar":
@@ -55,6 +55,10 @@ function query(db, dados)
         case "getAcoes":
             var momento_atual = new Date().getTime();
             collection.find({usuario: dados.usuario, acao_termina_em: {$gt: momento_atual} }).toArray(dados.callback);
+        break;
+
+        case "revogaAcao":
+            collection.deleteOne({_id: ObjectID(dados._id)}, dados.callback);
         break;
     }
 }

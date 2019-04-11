@@ -100,6 +100,16 @@
 					<strong>Senhor, a atividade ordenada foi finalizada!!!</strong>
 					</div>
 				<%}%>
+				<% if (msg == 'D'){%>
+					<div class="alert alert-info" id="msg"> 
+					<strong>Senhor, sua ordem foi revogada!!</strong>
+					</div>
+				<%}%>
+				<% if (msg == 'E'){%>
+					<div class="alert alert-info" id="msg"> 
+					<strong>Parabéns, sua conta foi criada com sucesso!!</strong>
+					</div>
+				<%}%>
 			<div class="row">
 	    		<div class="col-sm-3 casa">
 					<img src="images/casa_<%=img_casa%>.jpg" />

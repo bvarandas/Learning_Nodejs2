@@ -3,6 +3,10 @@ module.exports = function(application) {
         application.app.controllers.index.home(application, req, res);
     })
 
+    application.get('/index', function(req, res){
+        application.app.controllers.index.home(application, req, res);
+    })
+
     application.post('/autenticar', function(req, res){
         application.app.controllers.index.autenticar(application, req, res);
     })

@@ -1,5 +1,5 @@
 module.exports.cadastro = function(application, req, res){
-    res.render('cadastro', {validacao:{}, dadosForm:{}});
+    res.render('cadastro', {validacao:{}, dadosForm:{}, msg:{}});
 }
 
 module.exports.cadastrar = function(application, req,res)
@@ -15,7 +15,7 @@ module.exports.cadastrar = function(application, req,res)
 
     if (erros)
     {
-        res.render('cadastro', {validacao: erros, dadosForm: dadosForm});
+        res.render('cadastro', {validacao: erros, dadosForm: dadosForm, msg:{} });
 
         return;
     }
@@ -39,7 +39,7 @@ module.exports.cadastrar = function(application, req,res)
         magia:Math.floor(Math.random() * 1000)
     });
 
-    res.send('podemos cadastrar');
-    //res.render('jogo',{img_casa: req.session.casa});
+    //res.send('podemos cadastrar');
+    res.render('cadastro',{img_casa: req.session.casa, msg:'A', validacao:{}, dadosForm:{dadosForm}});
 
 }

@@ -25,7 +25,9 @@
 				var segundos_restantes =  Math.round( (acoes[i].acao_termina_em- dateNow ) /1000);
 
 				%>
-				<li><%=acoes[i].quantidade%> <%=txt_acao%> - <small>restam <span class="tempo_restante"> 5</span> segundos - <a href="#">revogar ordem</a></small> </li>
+				<li><%=acoes[i].quantidade%> <%=txt_acao%> - 
+				<small>restam <span class="tempo_restante"> <%=segundos_restantes%></span> segundos - 
+				<a href='/revogar_acao?id_acao=<%=acoes[i]._id%>'>revogar ordem</a></small> </li>
 		<%}%>
 		<!--
 		<li>1 enforcamento(s) programado - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>
