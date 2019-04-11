@@ -17,7 +17,7 @@ JogoDAO.prototype.gerarParametros = function(parametros) {
     this._connection(dados);
 };
 
-JogoDAO.prototype.iniciaJogo = function(req, res, usuario, comando_invalido)
+JogoDAO.prototype.iniciaJogo = function(req, res, usuario, msg)
 {
     var dados = {
         operacao: "iniciaJogo",
@@ -27,7 +27,7 @@ JogoDAO.prototype.iniciaJogo = function(req, res, usuario, comando_invalido)
 
     dados.callback = function(err, result)
     {
-        res.render('jogo', {img_casa: req.session.casa, jogo: result[0], comando_invalido: comando_invalido});
+        res.render('jogo', {img_casa: req.session.casa, jogo: result[0], msg: msg});
     };
 
     this._connection(dados);
@@ -39,7 +39,7 @@ JogoDAO.prototype.acao = function(acao)
     var date = new Date();
     var tempo = null;
 
-    switch(acao.acao)
+    switch(parseInt( acao.acao))
     {
         case 1 : 
             tempo = 1 * 60 * 60000; 
@@ -55,13 +55,23 @@ JogoDAO.prototype.acao = function(acao)
         break;
     }
 
+    var moedas = 0;
+
+    switch(parseInt(acao.acao))
+    {
+        case 1 : moedas = -2 * acao.quantidade ; break;
+        case 2 : moedas = -3 * acao.quantidade ; break;
+        case 3 : moedas = -1 * acao.quantidade ; break;
+        case 4 : moedas = -1 * acao.quantidade ; break;
+    }
     
     acao.acao_termina_em = date.getTime() + tempo;
 
     var dados = {
         operacao: "acaoJogo",
         acao: acao,
-        collection: "acao"
+        collection: "acao",
+        moedas: moedas
     };
 
     dados.callback = function(err, result)
@@ -72,6 +82,21 @@ JogoDAO.prototype.acao = function(acao)
     this._connection(dados);
 
 }
+
+JogoDAO.prototype.getAcoes = function(req, res, usuario, msg){
+    var dados = {
+        operacao: "getAcoes",
+        usuario: usuario,
+        collection: "acao"
+    };
+
+    dados.callback = function(err, result)
+    {
+        res.render('pergaminhos', { acoes: result, msg: msg});
+    };
+
+    this._connection(dados);
+};
 
 module.exports = function(){
     return JogoDAO;

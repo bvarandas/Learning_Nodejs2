@@ -39,12 +39,22 @@ function query(db, dados)
         break;
         case "acaoJogo":
             collection.insertOne(dados.acao, dados.callback);
+
+            collection.update(
+                {usuario:acao.usuario},
+                {$inc:{moeda: moedas}}
+            );
         break;
         case "autenticar":
             collection.find({ 
                 usuario: {$eq: user.usuario}, 
                 senha: {$eq: user.senha}
             }).toArray(dados.callback);
+        break;
+
+        case "getAcoes":
+            var momento_atual = new Date().getTime();
+            collection.find({usuario: dados.usuario, acao_termina_em: {$gt: momento_atual} }).toArray(dados.callback);
         break;
     }
 }
