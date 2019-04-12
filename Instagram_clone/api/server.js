@@ -103,6 +103,19 @@ app.put('/api/:id', function(req, res){
     });
 });
 
+app.get('/images/:imagem', function(req, res){
+    var img = req.params.imagem;
+    fs.readFile('./uploads/' + img, function(err, conteudo ){
+        if(err){
+            res.status(400).json(err);
+            return;
+        }
+        res.writeHead(200, {'content-type': 'image/jpg'});
+        res.end(conteudo);
+
+    });
+});
+
 app.delete('/api/:id', function(req, res){
     
     db.open(function(err, mongoClient){
