@@ -13,7 +13,7 @@ var expressValidator = require('express-validator');
 /*Iniciando o objeto do express* */
 var app = express();
 
-/*configurar o ejs (engine de views) - setar a sviaruáveis (view engine) e views do express*/
+/*configurar o ejs (engine de views) - setar as viariáveis (view engine) e views do express*/
 app.set('view engine', 'ejs');
 app.set('views','./app/views');
 
